@@ -409,9 +409,8 @@ int Semaphore_pend_handle(sem_t* pSemHandle,  uint32_t timeout)
         abstime.tv_nsec = 0;
         abstime.tv_sec = 0;
 
-        /* Since POSIX timeout are relative and not absolute,
-         * take the current timestamp. */
-        clock_gettime(CLOCK_REALTIME, &abstime);
+        /* Zephyr sem_timedwait uses uptime */
+        clock_gettime(CLOCK_MONOTONIC, &abstime);
         if(abstime.tv_nsec < 0)
         {
             abstime.tv_sec = timeout;
