@@ -46,12 +46,14 @@ static void sl_isr(const void *isr_arg)
 #if defined(CONFIG_SOC_SERIES_CC32XX)
 static struct sl_isr_args sl_UDMA_cb = {NULL, 0};
 static struct sl_isr_args sl_UDMAERR_cb = {NULL, 0};
+static struct sl_isr_args sl_SHA_cb = {NULL, 0};
 static struct sl_isr_args sl_NWPIC_cb = {NULL, 0};
 static struct sl_isr_args sl_LSPI_cb = {NULL, 0};
 
 /* Must hardcode the IRQ for IRQ_CONNECT macro.	 Must be <= CONFIG_NUM_IRQS.*/
 #define EXCEPTION_UDMA		46	/* == INT_UDMA	(62) - 16 */
 #define EXCEPTION_UDMAERR	47	/* == INT_UDMAERR (63) - 16 */
+#define EXCEPTION_SHA		148 /* == INT_SHA (164) - 16 */
 #define EXCEPTION_NWPIC		171	/* == INT_NWPIC (187) - 16 */
 #define EXCEPTION_LSPI		177	/* == INT_LSPI (193) - 16 */
 
@@ -96,6 +98,11 @@ HwiP_Handle HwiP_create(int interruptNum, HwiP_Fxn hwiFxn, HwiP_Params *params)
 		sl_UDMAERR_cb.cb = hwiFxn;
 		sl_UDMAERR_cb.arg = arg;
 		IRQ_CONNECT(EXCEPTION_UDMAERR, 6, sl_isr, &sl_UDMAERR_cb, 0);
+		break;
+	case INT_SHA:
+		sl_SHA_cb.cb = hwiFxn;
+		sl_SHA_cb.arg = arg;
+		IRQ_CONNECT(EXCEPTION_SHA, 6, sl_isr, &sl_SHA_cb, 0);
 		break;
 	case INT_NWPIC:
 		sl_NWPIC_cb.cb = hwiFxn;

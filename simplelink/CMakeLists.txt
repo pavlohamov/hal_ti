@@ -22,6 +22,9 @@ if(CONFIG_HAS_CC3220SDK)
       source/ti/drivers/spi/SPICC32XXDMA.c
       source/ti/drivers/dma/UDMACC32XX.c
       source/ti/drivers/power/PowerCC32XX.c
+      source/ti/drivers/crypto/CryptoCC32XX.c
+      source/ti/devices/cc32xx/driverlib/shamd5.c
+      source/ti/drivers/cryptoutils/utils/CryptoUtils.c
       source/ti/drivers/utils/List.c
       source/ti/drivers/net/wifi/source/driver.c
       source/ti/drivers/net/wifi/source/device.c
